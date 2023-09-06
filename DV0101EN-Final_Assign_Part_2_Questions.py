@@ -102,9 +102,10 @@ def update_output_container(selected_statistics, input_year):
         emp_rec = recession_data.groupby(['unemployment_rate','Vehicle_Type'])['Automobile_Sales'].sum().reset_index()
         R_chart4 = dcc.Graph(
             figure=px.histogram(emp_rec, 
-            x='Vehicle_Type',
+            x='unemployment_rate',
             y='Automobile_Sales', 
-            color='unemployment_rate',
+            color='Vehicle_Type',
+            barmode='group',
             title='The Effect of Unemployment on Automobile Sales across Different Vehicle Types over Recession Period'))
 
 
@@ -120,7 +121,7 @@ def update_output_container(selected_statistics, input_year):
                               
 #TASK 2.5: Creating Graphs Yearly data
                               
-#plot 1 Yearly Automobile sales using line chart for the whole period.z``
+#plot 1 Yearly Automobile sales using line chart for the whole period.
         yas= data.groupby('Year')['Automobile_Sales'].mean().reset_index()
         Y_chart1 = dcc.Graph(
             figure=px.line(yas, 
@@ -129,8 +130,9 @@ def update_output_container(selected_statistics, input_year):
             title="Yearly Average Automobile Sales Fluctuation"))
             
 # Plot 2 Total Monthly Automobile sales using line chart.
+        mas= yearly_data.groupby('Month')['Automobile_Sales'].mean().reset_index()
         Y_chart2 = dcc.Graph(
-            figure=px.line(yas, 
+            figure=px.line(mas, 
             x='Month',
             y='Automobile_Sales',
             title="Monthly Average Automobile Sales Fluctuation"))
@@ -146,9 +148,10 @@ def update_output_container(selected_statistics, input_year):
 # Total Advertisement Expenditure for each vehicle using pie chart
         exp_data=yearly_data.groupby(['unemployment_rate','Vehicle_Type'])['Automobile_Sales'].sum().reset_index()
         Y_chart4 = dcc.Graph(figure=px.histogram(exp_data, 
-            x='Vehicle_Type',
+            x='unemployment_rate',
             y='Automobile_Sales', 
-            color='unemployment_rate',
+            color='Vehicle_Type',
+            barmode='group',
             title='The Effect of Unemployment on Automobile Sales across Different Vehicle Types in the year {}'.format(input_year)))
 
 #TASK 2.6: Returning the graphs for displaying Yearly data
